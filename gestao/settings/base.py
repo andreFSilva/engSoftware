@@ -9,11 +9,11 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,11 +40,14 @@ INSTALLED_APPS = [
     # app de terceiros
 
     # app myapps
+    'clientes',
+    'home',
     'users',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'gestao.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,7 +124,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# Arquivos estaticos
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Arquivos de media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
 
 # User Model
 AUTH_USER_MODEL = 'users.User'
@@ -129,3 +138,11 @@ AUTH_USER_MODEL = 'users.User'
 # Configurando o whitenoise
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# login
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = 'person_list'
+
+# Variáveis para Logout:
+LOGOUT_URL = '/sair/'
+LOGOUT_REDIRECT_URL = 'home' #Quando o usuário sair, será redirecionado para a página home.
