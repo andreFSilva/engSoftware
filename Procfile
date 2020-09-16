@@ -1,3 +1,3 @@
 release: python manage.py migrate
 
-web: gunicorn engsof.wsgi; --log-file -
+web: gunicorn gestao.wsgi; --log-file -
